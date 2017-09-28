@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import {browserHistory, Router, Route, IndexRoute} from 'react-router';
+import {syncHistoryWithStore, routerMiddleware} from 'react-router-redux';
+import {Provider} from 'react-redux';
 
 import './stylesheets/main.scss';
-import App from './components/App';
 import {reducers} from './reducers/index';
+import App from './components/App';
+import Home from './pages/Home';
+import UserEdit from './pages/UserEdit';
+import NotFound from './pages/NotFound';
 
 
 //build the user list
@@ -25,11 +30,20 @@ const initial_state = {
 }
 
 // create the store
-const store = createStore(reducers, initial_state);
+let middleware = applyMiddleware(routerMiddleware(browserHistory));
+const store = createStore(reducers, initial_state, middleware);
+const history = syncHistoryWithStore(browserHistory, store);
 
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <Router history={history}>
+            <Route path="/" component={App}>
+                <IndexRoute component={Home}/>
+                <Route path="user-edit{/:id}" component={UserEdit}/>
+                <Route path="*" component={NotFound}/>
+            </Route>
+        </Router>
     </Provider>,
-    document.getElementById('app'));
+    document.getElementById('app')
+);

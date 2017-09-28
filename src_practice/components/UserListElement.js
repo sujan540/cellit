@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 
@@ -25,11 +26,11 @@ class UserListElement extends React.Component {
                 <td>{user.username}</td>
                 <td>{user.job}</td>
                 <td>
-                    <a href={'/user-edit/' + user.id}>
+                    <Link href={'/user-edit/' + user.id}>
                         <Button bsSize="xsmall">
                             Edit <Glyphicon glyph="edit"/>
                         </Button>
-                    </a>
+                    </Link>
                 </td>
                 <td>
                     <Button bsSize="xsmall" data-id={user.id} data-username={user.username}
