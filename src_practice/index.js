@@ -21,7 +21,9 @@ for (let i = 1; i < 10; i++) {
 }
 
 const initial_state = {
-    users: users
+    users: {
+        list: users
+    }
 }
 
 // create the store
