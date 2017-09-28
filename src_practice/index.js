@@ -40,7 +40,7 @@ ReactDOM.render(
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Home}/>
-                <Route path="user-edit{/:id}" component={UserEdit}/>
+                <Route path="user-edit(/:id)" component={UserEdit}/>
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>

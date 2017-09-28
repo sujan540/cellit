@@ -26,8 +26,8 @@ class UserList extends React.Component {
                     <tr>
                         <th>ID</th>
                         <th>Username</th>
-                        <th>Edit</th>
                         <th>Employee</th>
+                        <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
