@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import {browserHistory, Router, Route, IndexRoute} from 'react-router';
 import {syncHistoryWithStore, routerMiddleware} from 'react-router-redux';
 import {Provider} from 'react-redux';
@@ -15,7 +15,7 @@ import NotFound from './pages/NotFound';
 
 //build the user list
 let users = [];
-for (let i = 1; i < 10; i++) {
+for (let i = 1; i < 28; i++) {
     users.push({
         id: i,
         username: 'Sujan ' + i,
@@ -31,6 +31,9 @@ const initial_state = {
 
 // create the store
 let middleware = applyMiddleware(routerMiddleware(browserHistory));
+if(process.env.MODE_ENV !== 'production'){
+    middleware = compose(middleware, window.devToolsExtension &&  window.devToolsExtension());
+}
 const store = createStore(reducers, initial_state, middleware);
 const history = syncHistoryWithStore(browserHistory, store);
 

@@ -18,7 +18,7 @@ class UserDelete extends React.Component {
             <Modal show={this.props.modal_delete.show}>
                 <Modal.Header>
                     <Modal.Title>
-                        Are you sure you want to delete &nbsp; <strong>{this.props.modal_delete.username}</strong>?
+                        Are you sure you want to delete&nbsp;<strong>{this.props.modal_delete.username}</strong>?
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
