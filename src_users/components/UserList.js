@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import { Table, Pagination } from "react-bootstrap";
 import UserListElement from "./UserListElement";
-import UserDeletePrompt from "./UserDeletePrompt";
+import UserDelete from "./UserDelete";
 
 // User list component
 export class UserList extends React.Component {
@@ -61,7 +61,7 @@ export class UserList extends React.Component {
         <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next
           prev boundaryLinks items={pages} activePage={page} onSelect={this.changePage}/>
 
-        <UserDeletePrompt show={this.state.delete_show} user={this.state.delete_user}
+        <UserDelete show={this.state.delete_show} user={this.state.delete_user}
           hideDelete={this.hideDelete} userDelete={this.userDelete}/>
       </div>
     );
