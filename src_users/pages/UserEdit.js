@@ -1,26 +1,28 @@
-import React from 'react';
-import {PageHeader, Form, FormGroup, Col, Button, FormControl, InputGroup, Glyphicon, HelpBlock} from 'react-bootstrap';
-import {Field, reduxForm} from 'redux-form';
-import {connect} from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
+import { push } from "react-router-redux";
+import { Field, SubmissionError, reduxForm } from "redux-form";
+import { PageHeader, Form, FormGroup, Col,Button, FormControl, HelpBlock, InputGroup, Glyphicon } from "react-bootstrap";
 import {goBack} from 'react-router-redux';
 
 
-class UserEdit extends React.Component {
-
-    //current form type
-    form_type;
-
+// User add/edit page component
+export class UserEdit extends React.Component {
+    // constructor
     constructor(props) {
-        console.log('lamo..');
         super(props);
-        this.form_type = (props.initialValues.id > 0) ? 'edit' : 'add';
+
+        // bind <this> to the event method
         this.formSubmit = this.formSubmit.bind(this);
     }
 
+    // render
     render() {
+        const {user, handleSubmit, error, invalid, submitting} = this.props;
         return (
-            <div>
-                <PageHeader>{'edit' === this.form_type ? 'Edit' : 'Add'}</PageHeader>
+            <div className="page-user-edit">
+                <PageHeader>{'User ' + (user.id ? 'edit' : 'add')}</PageHeader>
+
                 <Form horizontal onSubmit={this.props.handleSubmit(this.formSubmit)}>
                     <Field name="username" component={UserEdit.renderUsername}/>
                     <Field name="job" component={UserEdit.renderJob}/>
@@ -72,67 +74,57 @@ class UserEdit extends React.Component {
         )
     }
 
+    // submit the form
     formSubmit(values) {
-
-        //add/edit the user in the api
-        const upper_form_type = this.form_type.charAt(0).toUpperCase()+
-                this.form_type.slice(1);
-
-        this.props.dispatch({
-            type: 'users'+ upper_form_type, //Add or Edit
-            id: values.id,
-            username: values.username,
-            job: values.job
+        const {dispatch} = this.props;
+        return new Promise((resolve, reject) => {
+            dispatch({
+                type: 'USERS_ADD_EDIT',
+                user: {
+                    id: values.id || 0,
+                    username: values.username,
+                    job: values.job,
+                },
+                callbackError: (error) => {
+                    reject(new SubmissionError({_error: error}));
+                },
+                callbackSuccess: () => {
+                    this.props.dispatch(goBack());
+                }
+            });
         });
-
-        //add/edit user from state
-        this.props.dispatch({
-            type: 'users.' + this.form_type,//add or edit
-            id: values.id,
-            username: values.username,
-            job: values.job
-        });
-
-        //redirect to previous page
-        this.props.dispatch(goBack());
     }
 }
 
-
-//decorate the form component
+// decorate the form component
 const UserEditForm = reduxForm({
     form: 'user_edit',
     validate: function (values) {
         const errors = {};
         if (!values.username) {
-            errors.username = 'User name is required';
+            errors.username = 'Username is required';
         }
         return errors;
-    }
+    },
 })(UserEdit);
 
+// export the connected class
 function mapStateToProps(state, own_props) {
     let form_data = {
         id: 0,
         username: '',
         job: ''
     };
-    console.log('one'+state);
-    console.log('two'+state.users);
-    console.log('three'+state.users.list);
-    console.log('four'+own_props);
 
-    if(state.users.list) {
-        for (const user of state.users.list) {
-            if (user.id === Number(own_props.params.id)) {
-                form_data = user;
-                break;
-            }
+    for (const user of state.users) {
+        if (user.id === Number(own_props.params.id)) {
+            form_data = user;
+            break;
         }
     }
     return {
-        initialValues: form_data
+        initialValues: form_data,
+        user: form_data
     };
 }
-
 export default connect(mapStateToProps)(UserEditForm);
