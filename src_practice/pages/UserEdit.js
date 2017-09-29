@@ -7,6 +7,7 @@ import {goBack} from 'react-router-redux';
 
 class UserEdit extends React.Component {
 
+    //current form type
     form_type;
 
     constructor(props) {
@@ -71,6 +72,19 @@ class UserEdit extends React.Component {
     }
 
     formSubmit(values) {
+
+        //add/edit the user in the api
+        const upper_form_type = this.form_type.charAt(0).toUpperCase()+
+                this.form_type.slice(1);
+
+        this.props.dispatch({
+            type: 'users'+ upper_form_type, //Add or Edit
+            id: values.id,
+            username: values.username,
+            job: values.job
+        });
+
+        //add/edit user from state
         this.props.dispatch({
             type: 'users.' + this.form_type,//add or edit
             id: values.id,
@@ -102,6 +116,10 @@ function mapStateToProps(state, own_props) {
         username: '',
         job: ''
     };
+    console.log(state);
+    console.log(state.users);
+    console.log(state.users.list);
+    console.log(own_props);
 
     for (const user of state.users.list) {
         if (user.id === Number(own_props.params.id)) {

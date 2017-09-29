@@ -1,19 +1,19 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
-import { Button, Glyphicon } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import {Button, Glyphicon} from 'react-bootstrap';
 
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
 
 
 class UserListElement extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.modalDeleteShow = this.modalDeleteShow.bind(this);
     }
+
     /**
      * Render
      * @returns {XML}
@@ -26,7 +26,7 @@ class UserListElement extends React.Component {
                 <td>{user.username}</td>
                 <td>{user.job}</td>
                 <td>
-                    <Link href={'/user-edit/' + user.id}>
+                    <Link href={'user-edit/' + user.id}>
                         <Button bsSize="xsmall">
                             Edit <Glyphicon glyph="edit"/>
                         </Button>
@@ -34,7 +34,7 @@ class UserListElement extends React.Component {
                 </td>
                 <td>
                     <Button bsSize="xsmall" data-id={user.id} data-username={user.username}
-                        onClick={this.modalDeleteShow}>
+                            onClick={this.modalDeleteShow}>
                         Delete <Glyphicon glyph="remove-circle"/>
                     </Button>
                 </td>
@@ -42,7 +42,7 @@ class UserListElement extends React.Component {
         );
     }
 
-    modalDeleteShow(event){
+    modalDeleteShow(event) {
         const user_id = Number(event.target.dataset.id);
         const username = event.target.dataset.username;
         this.props.dispatch({
@@ -59,4 +59,4 @@ UserListElement.propTypes = {
 }
 
 
-export default connect() (UserListElement);
+export default connect()(UserListElement);

@@ -13,3 +13,28 @@ export function* usersFetchList(action){
         users: users
     });
 }
+
+
+/**
+ * Add a users
+ * @param action
+ */
+export function* usersAdd(action){
+    yield call(ApiUsers.add, action);
+}
+
+/**
+ * Edit a users
+ * @param action
+ */
+export function* usersEdit(action){
+    yield call(ApiUsers.edit, action);
+}
+
+/**
+ * delete a users
+ * @param action
+ */
+export function* usersDelete(action){
+    yield call(ApiUsers.delete, action);
+}

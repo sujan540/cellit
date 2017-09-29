@@ -9,7 +9,6 @@ export default class ApiUsers {
      */
     static getList(action) {
         const timeout = 1000;
-        console.log('lamo....');
         return new Promise(resolve => {
             setTimeout(() => {
                 let users = [];
@@ -23,6 +22,31 @@ export default class ApiUsers {
                 resolve(users);
             }, timeout)
         });
+
+    }
+
+    /**
+     * Add a user
+     * @param action
+     */
+    static add(action){
+        //call some api url
+    }
+
+    /**
+     * Edit a user
+     * @param action
+     */
+    static edit(action){
+
+    }
+
+
+    /**
+     * Delete a user
+     * @param action
+     */
+    static delete(action){
 
     }
 }
