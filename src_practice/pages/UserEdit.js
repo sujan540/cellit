@@ -1,7 +1,9 @@
 import React from 'react';
-import {PageHeader, Form, FormGroup, Col, Button, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
+import {PageHeader, Form, FormGroup, Col, Button, FormControl, InputGroup, Glyphicon, HelpBlock} from 'react-bootstrap';
 import {Field, reduxForm} from 'redux-form';
 import {connect} from 'react-redux';
+import {goBack} from 'react-router-redux';
+
 
 class UserEdit extends React.Component {
 
@@ -10,18 +12,22 @@ class UserEdit extends React.Component {
     constructor(props) {
         super(props);
         this.form_type = (props.initialValues.id > 0) ? 'edit' : 'add';
+        this.formSubmit = this.formSubmit.bind(this);
     }
 
     render() {
         return (
             <div>
                 <PageHeader>{'edit' === this.form_type ? 'Edit' : 'Add'}</PageHeader>
-                <Form horizontal>
+                <Form horizontal onSubmit={this.props.handleSubmit(this.formSubmit)}>
                     <Field name="username" component={UserEdit.renderUsername}/>
                     <Field name="job" component={UserEdit.renderJob}/>
                     <FormGroup>
                         <Col smOffset={2} sm={8}>
-                            <Button type="submit">Save User</Button>
+                            <Button type="submit"
+                                    disabled={this.props.invalid || this.props.submitting}>
+                                Save User
+                            </Button>
                         </Col>
                     </FormGroup>
 
@@ -33,11 +39,15 @@ class UserEdit extends React.Component {
 
     static renderUsername(props) {
         return (
-            <FormGroup>
+            <FormGroup validationState={!props.meta.touched ? null :
+                (props.meta.error ? 'error' : 'success')}>
                 <Col sm={2}>Username</Col>
                 <Col sm={8}>
                     <FormControl {...props.input} id="username" type="text"
                                  placeholder="Username"/>
+                    {/*<FormControl.FeedBack/>*/}
+                    <HelpBlock>{props.meta.touched && props.meta.error ?
+                        props.meta.error : null}</HelpBlock>
                 </Col>
             </FormGroup>
         )
@@ -59,12 +69,31 @@ class UserEdit extends React.Component {
             </FormGroup>
         )
     }
+
+    formSubmit(values) {
+        this.props.dispatch({
+            type: 'users.' + this.form_type,//add or edit
+            id: values.id,
+            username: values.username,
+            job: values.job
+        });
+
+        //redirect to previous page
+        this.props.dispatch(goBack());
+    }
 }
 
 
 //decorate the form component
 UserEdit = reduxForm({
-    form: 'user_edit'
+    form: 'user_edit',
+    validate: function (values) {
+        const errors = {};
+        if (!values.username) {
+            errors.username = 'User name is required';
+        }
+        return errors;
+    }
 })(UserEdit);
 
 function mapStateToProps(state, own_props) {
