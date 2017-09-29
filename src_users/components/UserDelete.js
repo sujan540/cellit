@@ -3,6 +3,10 @@ import { Modal, Button } from "react-bootstrap";
 
 // User delete component
 export default class UserDelete extends React.Component {
+
+    componentWillUnmount(){
+
+    }
   // render
   render() {
     const {show, user, hideDelete, userDelete} = this.props;
