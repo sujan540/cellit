@@ -94,7 +94,7 @@ class UserEdit extends React.Component {
         });
 
         //redirect to previous page
-        this.props.dispatch(goBack());
+        //this.props.dispatch(goBack());
     }
 }
 
@@ -117,17 +117,14 @@ function mapStateToProps(state, own_props) {
         username: '',
         job: ''
     };
-    console.log('one'+state);
-    console.log('two'+state.users);
-    console.log('three'+state.users.list);
+
+    console.log(state.users.list);
     console.log('four'+own_props);
 
-    if(state.users.list) {
-        for (const user of state.users.list) {
-            if (user.id === Number(own_props.params.id)) {
-                form_data = user;
-                break;
-            }
+    for (const user of state.users.list) {
+        if (user.id === Number(own_props.params.id)) {
+            form_data = user;
+            break;
         }
     }
     return {

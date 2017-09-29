@@ -39,7 +39,7 @@ class reducerClass {
     }
 
     static add(new_state, action) {
-        const id = Number((Math.random() * 1000000).toPrecision(6));
+        const id = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
         new_state.list.push({
             id: id,
             username: action.username,
@@ -51,6 +51,7 @@ class reducerClass {
     }
 
     static edit(new_state, action) {
+        console.log(new_state.list)
         for (const user of new_state.list) {
             if (user.id === action.id) {
                 Object.assign(user, {

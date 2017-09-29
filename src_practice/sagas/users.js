@@ -7,7 +7,7 @@ export function* usersFetchList(action){
 
     const users = yield call(ApiUsers.getList);
 
-    //dispatch the success action with the uses attached
+    // save the users in state
     yield put({
         type: 'users.fetchListSuccess',
         users: users
@@ -21,6 +21,14 @@ export function* usersFetchList(action){
  */
 export function* usersAdd(action){
     yield call(ApiUsers.add, action);
+
+    const users = yield call(ApiUsers.getList);
+
+    // update the state by adding the user
+    yield put({
+        type: 'usersAdd',
+        users: action.user,
+    });
 }
 
 /**
@@ -29,6 +37,12 @@ export function* usersAdd(action){
  */
 export function* usersEdit(action){
     yield call(ApiUsers.edit, action);
+
+    // update the state by editing the user
+    yield put({
+        type: 'usersEdit',
+        user: action.user,
+    });
 }
 
 /**
@@ -37,4 +51,10 @@ export function* usersEdit(action){
  */
 export function* usersDelete(action){
     yield call(ApiUsers.delete, action);
+
+    // update the state by removing the user
+    yield put({
+        type: 'usersEdit',
+        user_id: action.user_id,
+    });
 }
