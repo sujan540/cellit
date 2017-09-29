@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import assert from "assert";
-import { UserList } from "../../src_users/components/common/UserList";
+import { UserList } from "../../src_users/components/UserList";
 
 // unit tests for the UserList component
 describe('UserList component', () => {
