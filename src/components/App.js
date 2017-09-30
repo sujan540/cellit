@@ -45,7 +45,7 @@ export default class App extends React.Component {
     }
 
     writeToScreen(msg, level) {
-        var elem = document.getElementById('screen');
+        let elem = document.getElementById('screen');
         elem.innerHTML += '<div class="log bg-' + level + '">' +
             '<span class="glyphicon glyphicon-ok"></span> &nbsp;&nbsp;' +
             msg +
