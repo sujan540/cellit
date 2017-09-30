@@ -12,14 +12,6 @@ export default class Welcome extends React.Component {
         this.update = this.update.bind(this);
     }
 
-    //This is not used in ES6 Welcome.propTypes is used
-    // getDefaultProps() {
-    //     writeToScreen('GetDefaultProps', 'info');
-    //     return {
-    //         bar: 2
-    //     };
-    // }
-
     render() {
         this.props.writeToScreen('Render', 'success');
         return (<div>
@@ -41,74 +33,38 @@ export default class Welcome extends React.Component {
             foo: index + 1
         });
     }
+
+    componentWillMount() {
+        this.props.writeToScreen('ComponentWillMount', 'warning');
+    }
+
+    componentDidMount() {
+        this.props.writeToScreen('ComponentDidMount', 'warning');
+    }
+
+    shouldComponentUpdate() {
+        this.props.writeToScreen('ShouldComponentUpdate', 'info');
+        return true;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.props.writeToScreen('ComponentWillRecieveProps', 'warning');
+    }
+
+    componentWillUpdate() {
+        this.props.writeToScreen('ComponentWillUpdate', 'warning');
+    }
+
+    componentDidUpdate() {
+        this.props.writeToScreen('ComponentDidUpdate', 'warning');
+    }
+
+    componentWillUnmount() {
+        this.props.writeToScreen('componentWillUnmount', 'danger');
+    }
 }
 
 Welcome.propTypes = {
     bar: React.PropTypes.number.isRequired,
     writeToScreen: React.PropTypes.func.isRequired,
 }
-Welcome.defaultProps = {
-    bar: 200,
-}
-
-
-
-// /var Welcome = React.createClass({
-//     getInitialState: function() {
-//         writeToScreen('GetInitialState', 'info');
-//         return {foo : 1};
-//     },
-//
-//     getDefaultProps: function() {
-//         writeToScreen('GetDefaultProps', 'info');
-//         return {bar: 2};
-//     },
-//
-//     update: function() {
-//         writeToScreen('Updating State', 'primary');
-//         this.setState({foo: 2});
-//     },
-//
-//     render: function() {
-//         writeToScreen('Render', 'success');
-//         return (<div>
-//             This.state.foo: {this.state.foo} <br />
-//             This.state.bar: {this.props.bar}
-//             <br/>
-//             <hr/>
-//             <button className="btn btn-success"
-//                     onClick={this.update}>
-//                 Update State
-//             </button>
-//         </div>);
-//     },
-//
-//     componentWillMount: function() {
-//         writeToScreen('ComponentWillMount', 'warning');
-//     },
-//
-//     componentDidMount: function() {
-//         writeToScreen('ComponentDidMount', 'warning');
-//     },
-//
-//     shouldComponentUpdate: function() {
-//         writeToScreen('ShouldComponentUpdate', 'info');
-//         return true;
-//     },
-//
-//     componentWillReceiveProps: function(nextProps) {
-//         writeToScreen('ComponentWillRecieveProps', 'warning');
-//     },
-//
-//     componentWillUpdate: function() {
-//         writeToScreen('ComponentWillUpdate', 'warning');
-//     },
-//
-//     componentDidUpdate: function() {
-//         writeToScreen('ComponentDidUpdate', 'warning');
-//     },
-//
-//     componentWillUnmount: function() {
-//         writeToScreen('componentWillUnmount', 'danger');
-//     }
-// });

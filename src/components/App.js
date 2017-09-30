@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Welcome from './Welcome';
 
@@ -10,6 +11,9 @@ export default class App extends React.Component {
             id: 1
         }
         this.update = this.update.bind(this);
+        this.writeToScreen('Initial', 'primary');
+        this.unmountComponent();
+
         this.writeToScreen = this.writeToScreen.bind(this);
     }
 
@@ -46,6 +50,15 @@ export default class App extends React.Component {
             '<span class="glyphicon glyphicon-ok"></span> &nbsp;&nbsp;' +
             msg +
             '</div>';
+    }
+
+    unmountComponent() {
+        const button = document.getElementById('unmount');
+        button.addEventListener('click', () => {
+            this.writeToScreen('Unmounting', 'primary');
+            ReactDOM.unmountComponentAtNode(document.getElementById('app'));
+            button.remove();
+        });
     }
 
 
