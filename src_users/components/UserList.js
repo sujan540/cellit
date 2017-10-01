@@ -19,9 +19,7 @@ export class UserList extends React.Component {
 
     // bind <this> to the event method
     this.changePage = this.changePage.bind(this);
-    this.showDelete = this.showDelete.bind(this);
-    this.hideDelete = this.hideDelete.bind(this);
-    this.userDelete = this.userDelete.bind(this);
+
   }
 
   // render
@@ -51,7 +49,7 @@ export class UserList extends React.Component {
             if (index >= start_offset && start_count < per_page) {
               start_count++;
               return (
-                <UserListElement key={index} user={user} showDelete={this.showDelete}/>
+                <UserListElement key={index} user={user}/>
               );
             }
           })}
@@ -61,8 +59,7 @@ export class UserList extends React.Component {
         <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next
           prev boundaryLinks items={pages} activePage={page} onSelect={this.changePage}/>
 
-        <UserDelete show={this.state.delete_show} user={this.state.delete_user}
-          hideDelete={this.hideDelete} userDelete={this.userDelete}/>
+        <UserDelete/>
       </div>
     );
   }
@@ -72,35 +69,6 @@ export class UserList extends React.Component {
     this.props.dispatch(push('/?page=' + page));
   }
 
-  // show the delete user prompt
-  showDelete(user) {
-    // change the local ui state
-    this.setState({
-      delete_show: true,
-      delete_user: user,
-    });
-  }
-
-  // hide the delete user prompt
-  hideDelete() {
-    // change the local ui state
-    this.setState({
-      delete_show: false,
-      delete_user: {},
-    });
-  }
-
-  // delete the user
-  userDelete() {
-    // delete the user
-    this.props.dispatch({
-      type: 'USERS_DELETE',
-      user_id: this.state.delete_user.id,
-    });
-
-    // hide the prompt
-    this.hideDelete();
-  }
 }
 
 // export the connected class
