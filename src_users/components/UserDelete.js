@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 // User delete component
 class UserDelete extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.modalDeleteHide = this.modalDeleteHide.bind(this);
@@ -16,10 +16,10 @@ class UserDelete extends React.Component {
     // render
     render() {
         return (
-            <Modal show={this.props.modal_delete.show}>
+            <Modal show={this.props.delete_modal.show}>
                 <Modal.Header>
                     <Modal.Title>
-                        Are you sure you want to delete <strong>{this.props.modal_delete.username}</strong>?
+                        Are you sure you want to delete <strong>{this.props.delete_modal.user.username}</strong>?
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
@@ -30,39 +30,44 @@ class UserDelete extends React.Component {
         );
     }
 
-    modalDeleteHide(event){
+    modalDeleteHide(event) {
         this.props.dispatch({
             type: 'MODAL_DELETE_HIDE',
         });
     }
 
-    userDelete(event){
+    userDelete(event) {
         this.props.dispatch({
             type: 'USERS_DELETE_SAVE',
-            id: this.props.modal_delete.id,
+            id: this.props.delete_modal.user.id,
         });
         this.modalDeleteHide(event);
     }
 }
 
 function mapStateToProps(state) {
-
-    let modal_delete;
-    if (state.users.delete_user && state.users.delete_user.id > 0) {
-        modal_delete = {
+    let delete_modal;
+    if (state.users.delete_modal
+        && state.users.delete_modal.user
+        && state.users.delete_modal.user.id > 0) {
+        delete_modal = {
             show: true,
-            id: state.users.delete_user.id,
-            username: state.users.delete_user.username
+            user: {
+                id: state.users.delete_modal.user.id,
+                username: state.users.delete_modal.user.username
+            }
         }
     } else {
-        modal_delete = {
+        delete_modal = {
             show: false,
-            id: 0,
-            username: ''
+            user: {
+                id: 0,
+                username: ''
+            }
         }
     }
     return {
-        modal_delete: modal_delete
+        delete_modal: delete_modal
     }
 }
 

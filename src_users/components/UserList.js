@@ -13,8 +13,10 @@ export class UserList extends React.Component {
 
     // default ui local state
     this.state = {
-      delete_show: false,
-      delete_user: {},
+      delete_modal: {
+          show: false,
+          user:{}
+      }
     };
 
     // bind <this> to the event method

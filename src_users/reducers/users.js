@@ -7,21 +7,25 @@ export default function users(state = {}, action) {
 
 class reducerClass {
     static MODAL_DELETE_SHOW(new_state, action) {
-        new_state.delete_show = true;
-        new_state.delete_user = {
-            id: action.id,
-            username: action.username
-        }
+        new_state.delete_modal = {
+            show: true,
+            user: {
+                id: action.id,
+                username: action.username
+            }
+        };
         return new_state;
     }
 
     static MODAL_DELETE_HIDE(new_state, action) {
 
-        new_state.delete_show = false;
-        new_state.delete_user = {
-            id: 0,
-            username: ''
-        }
+        new_state.delete_modal = {
+            show: false,
+            user: {
+                id: 0,
+                username: ''
+            }
+        };
         return new_state;
     }
 
