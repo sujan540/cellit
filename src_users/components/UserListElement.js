@@ -44,7 +44,6 @@ class UserListElement extends React.Component {
             type: 'MODAL_DELETE_SHOW',
             id: user_id,
             username: username
-
         });
     }
 }
